@@ -3,97 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Holi 2025</title>
+    <title>Happy Holi Sree!</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #ff6f61, #ffcc00, #00ccff, #ff00ff);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: #fff;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            box-sizing: border-box;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            transition: background 1.5s ease;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            z-index: 2;
+            margin-top: 5vh;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
         }
 
         h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
         }
 
-        p {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        .name {
+            font-size: 6rem;
+            font-weight: bold;
+            margin: 2rem 0;
+            transform: rotate(-5deg);
+            display: inline-block;
+            transition: all 0.5s ease;
         }
 
-        .button {
-            background-color: #ff6f61;
-            color: #fff;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        .message {
+            font-size: 2.2rem;
+            max-width: 600px;
+            line-height: 1.5;
+            margin: 2rem auto;
+            color: #444;
         }
 
-        .button:hover {
-            background-color: #ffcc00;
-        }
-
-        .footer {
+        .particles {
             position: absolute;
-            bottom: 20px;
-            font-size: 1rem;
-            color: #fff;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: float 8s infinite linear;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-20vh) rotate(360deg); }
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            background: #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 id="holi-heading">Happy Holi 2025!</h1>
-        <p id="holi-message">Wishing you a colorful and joyful Holi filled with love, happiness, and prosperity.</p>
-        <button id="holi-button" class="button" onclick="alert('Happy Holi Sree! 🎉')">Click for Holi Wishes</button>
-    </div>
+    <div class="particles" id="particles"></div>
     
+    <div class="container">
+        <h1 id="holiTitle">Happy Holi</h1>
+        <div class="name" id="name">SREE</div>
+        <p class="message" id="message">May your life become a beautiful canvas of colors!</p>
+        <button id="colorBtn">🎨 Paint the Sky!</button>
+    </div>
+
     <script>
-        // Function to generate a random color
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
+        // Random background generator
+        function setRandomBackground() {
+            const hue = Math.floor(Math.random() * 360);
+            document.body.style.background = `hsl(${hue}, 70%, 85%)`;
         }
 
-        // Function to apply random colors to elements
-        function applyRandomColors() {
-            const heading = document.getElementById('holi-heading');
-            const message = document.getElementById('holi-message');
-            const button = document.getElementById('holi-button');
-
-            heading.style.color = getRandomColor();
-            message.style.color = getRandomColor();
-            button.style.backgroundColor = getRandomColor();
+        // Color particle generator
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            const hue = Math.random() * 360;
+            particle.style.background = `hsl(${hue}, 100%, 50%)`;
+            particle.style.animationDuration = (3 + Math.random() * 5) + 's';
+            document.getElementById('particles').appendChild(particle);
         }
 
-        // Change colors every second
-        setInterval(applyRandomColors, 1000);
+        // Text color randomizer
+        function randomizeColors() {
+            const hue = Math.random() * 360;
+            const elements = [holiTitle, name, message, colorBtn];
+            
+            elements.forEach(el => {
+                const textHue = (hue + 180) % 360; // Contrasting color
+                if(el === colorBtn) {
+                    el.style.background = `hsl(${textHue}, 100%, 50%)`;
+                    el.style.color = '#fff';
+                } else {
+                    el.style.color = `hsl(${textHue}, 100%, 40%)`;
+                }
+            });
+        }
+
+        // Initial setup
+        setRandomBackground();
+        for(let i = 0; i < 30; i++) createParticle();
+
+        // Event listeners
+        colorBtn.addEventListener('click', () => {
+            setRandomBackground();
+            randomizeColors();
+            for(let i = 0; i < 15; i++) createParticle();
+        });
+
+        // Auto color change every 3 seconds
+        setInterval(() => {
+            setRandomBackground();
+            randomizeColors();
+        }, 3000);
     </script>
 </body>
 </html>
